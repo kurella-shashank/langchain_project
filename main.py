@@ -1,6 +1,7 @@
 from dotenv import  load_dotenv
 from langchain_core.prompts import PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_ollama import ChatOllama
 import os
 load_dotenv()
 def main():
@@ -15,7 +16,8 @@ def main():
         2.two interesting facts about the person """
     
     ResultPromptTemplate = PromptTemplate(input_variables=["information"], template= summary_prompt ) #reuseable prompt template
-    llm =ChatGoogleGenerativeAI(temperature=0.5, model="gemini-2.5-flash")
+    #llm =ChatGoogleGenerativeAI(temperature=0.5, model="gemini-2.5-flash")
+    llm =ChatOllama(temperature=0.5, model="gemma3:270m")
     chain= ResultPromptTemplate | llm 
     response=chain.invoke(input={"information": information})
     print(response.content)
